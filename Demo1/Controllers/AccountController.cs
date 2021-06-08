@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Demo1.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Demo1.Controllers
 {
     public class AccountController : Controller
     {
+
+        SChoolContext context = new SChoolContext();
         [HttpGet]
         public IActionResult Login()
         {
@@ -25,6 +28,19 @@ namespace Demo1.Controllers
                 return Content("Login Successfully ");
             }
                return Content("Username or password not correct ");
+        }
+
+
+        public IActionResult SignUp()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult SignUp(Student student)
+        {
+            context.Students.Add(student);
+            context.SaveChanges();
+            return RedirectToAction("index", "home");
         }
     }
     public class LoginViewModel
